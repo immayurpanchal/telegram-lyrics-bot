@@ -17,6 +17,11 @@ bot.on('text', async (ctx) => {
 		fetchedLyrics = formatLyrics(fetchedLyrics);
 	} catch (error) {
 		console.log(error);
+		// Send error message and return if no lyrics found or Fetch failed
+		return bot.telegram.sendMessage(
+			ctx.message.chat.id,
+			'Failed to fetch the lyrics or No lyrics found!'
+		);
 	}
 	console.log(fetchedLyrics);
 	const width = 1080;
