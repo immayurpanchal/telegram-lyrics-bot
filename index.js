@@ -16,23 +16,30 @@ bot.on('text', (ctx) => {
 	const canvas = createCanvas(width, height);
 	const context = canvas.getContext('2d');
 
-	context.fillStyle = '#000';
-	context.fillRect(0, 0, width, height);
+	loadImage('./assets/img/022_Morpheus_Den.png').then((img) => {
+		context.drawImage(img, 0, 0, width, height);
+		const text = ctx.message.text;
+		console.log(text.length);
 
-	context.font = 'bold 35pt Menlo';
-	context.textAlign = 'center';
-	context.textBaseline = 'top';
+		if (text.length < 10) {
+			context.font = '75pt Menlo';
+		} else if (text.length < 20) {
+			context.font = '50pt Menlo';
+		} else {
+			context.font = '35pt Menlo';
+		}
 
-	const text = ctx.message.text;
+		context.textAlign = 'center';
+		context.textBaseline = 'top';
 
-	const textWidth = context.measureText(text).width;
-	context.fillRect(600 - textWidth / 2 - 10, 170 - 5, textWidth + 20, 120);
-	context.fillStyle = '#fff';
-	context.fillText(text, 600, 170);
+		const textWidth = context.measureText(text).width;
+		context.fillStyle = '#fff';
+		context.fillText(text, 540, 300, 500);
 
-	const buffer = canvas.toBuffer('image/png');
-	// fs.writeFileSync('./test.png', buffer);
-	bot.telegram.sendPhoto(ctx.message.chat.id, { source: buffer });
+		const buffer = canvas.toBuffer('image/png');
+		fs.writeFileSync('./test.png', buffer);
+		bot.telegram.sendPhoto(ctx.message.chat.id, { source: buffer });
+	});
 });
 bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 bot.launch();
