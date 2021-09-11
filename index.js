@@ -27,7 +27,7 @@ bot.on('text', async (ctx) => {
 
 	const img = await loadImage('./assets/img/022_Morpheus_Den.png');
 	context.drawImage(img, 0, 0, width, height);
-	const text = fetchedLyrics || ctx.message.text;
+	const text = fetchedLyrics;
 	console.log(text.length);
 
 	if (text.length < 10) {
